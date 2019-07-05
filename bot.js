@@ -368,7 +368,7 @@ async function getBeatmap(id){
 }
 
 function postData(data){
-  request.post('https://script.google.com/macros/s/AKfycby9V_f53F5PNpkJ--7LhFrEV7-KnAs8ZhzjHgcYhcbCsL0hJyI9/exec', {
+  request.post('https://script.google.com/macros/s/AKfycbwRyYjcXHVRvgx5kT65woaAylDj-vUdhiS4GiLpr64YbkoJ8Jg/exec', {
     json : {
       data : data
     }
