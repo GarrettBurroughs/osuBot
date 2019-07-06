@@ -25,6 +25,9 @@ let globalWarmups;
 const startTime = new Date(Date.now());
 const logFile = `logs/osuBotLog-${startTime.getFullYear()}-${startTime.getMonth()}-${startTime.getDay()}_${startTime.getHours() % 12}-${startTime.getMinutes()}-${startTime.getSeconds()}.txt`;
 console.log(logFile);
+fs.writeFile(logFile,
+  `============================================================ OSU TOURNAMENT BOT LOG FILE - ${startTime.getFullYear()}/${startTime.getMonth()}/${startTime.getDay()} ${startTime.getHours() % 12}:${startTime.getMinutes()}:${startTime.getSeconds()} ============================================================ \n`, 
+(err) => {if (err) throw err});
 
 // Express Log Hosting
 app.listen(port, () => log(`Example app listening on port ${port}!`));
@@ -133,7 +136,7 @@ client.on('message', async msg => {
 
 
     // ============================== Forfeit ==============================
-    if (args[0] === "forfiet") {
+    if (args[0] === "forfeit") {
       let output = "";
       if (!inputChannel) {
         msg.reply(`Input channel has not been set, set it by using \`${prefix}setInputChannel <channel>\``);
@@ -159,6 +162,15 @@ client.on('message', async msg => {
       }
       postChannel.send(output);
 
+      postData([
+        "N/A", // timeout
+        `OPCT: (${team1}) vs (${team2})`, // Name
+        team1, // Player 1
+        team2, // Player 2
+        args[3] == 1 ? 0 : -1, // Score 1
+        args[3] == 2 ? 0 : -1, // Score 2
+        "Forfeit" // Match history
+      ]);
     }
 
 
@@ -432,6 +444,7 @@ async function getBeatmap(id) {
 }
 
 function postData(data) {
+  log(data);
   request.post(sheetLink, {
     json: {
       data: data
