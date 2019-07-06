@@ -26,12 +26,17 @@ const startTime = new Date(Date.now());
 const logFile = `logs/osuBotLog-${startTime.getFullYear()}-${startTime.getMonth()}-${startTime.getDay()}_${startTime.getHours() % 12}-${startTime.getMinutes()}-${startTime.getSeconds()}.txt`;
 console.log(logFile);
 fs.writeFile(logFile,
-  `============================================================ OSU TOURNAMENT BOT LOG FILE - ${startTime.getFullYear()}/${startTime.getMonth()}/${startTime.getDay()} ${startTime.getHours() % 12}:${startTime.getMinutes()}:${startTime.getSeconds()} ============================================================ \n`, 
-(err) => {if (err) throw err});
+  `============================================================ OSU TOURNAMENT BOT LOG FILE - ${startTime.getFullYear()}/${startTime.getMonth()}/${startTime.getDay()} ${startTime.getHours() % 12}:${startTime.getMinutes()}:${startTime.getSeconds()} ============================================================ \n`,
+  (err) => {
+    if (err) throw err
+  });
 
 // Express Log Hosting
 app.listen(port, () => log(`Example app listening on port ${port}!`));
-app.use('/', express.static('logs'), serveIndex('logs', {'icons' : true, 'view' : 'details'}));
+app.use('/', express.static('logs'), serveIndex('logs', {
+  'icons': true,
+  'view': 'details'
+}));
 
 let prefix = ".t "
 
@@ -218,7 +223,7 @@ client.on('message', async msg => {
       }
 
       log(results.match.name);
-      
+
       // Create Discord embed object (Makes things pretty)
       let embedOut = {
         color: embedColor,
@@ -264,7 +269,7 @@ client.on('message', async msg => {
         log(err)
       });
       log(embedOut);
-      
+
       // Send output to channel
       postChannel.send({
         embed: embedOut
