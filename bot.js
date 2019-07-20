@@ -35,7 +35,7 @@ fs.writeFile(logFile,
   });
 
 // Express Log Hosting
-app.listen(port, () => log(`Example app listening on port ${port}!`));
+app.listen(port, () => log(`osu tournament bot listening on port ${port}!`));
 app.use('/', express.static('logs'), serveIndex('logs', {
   'icons': true,
   'view': 'details'
@@ -365,12 +365,17 @@ async function matchInfo(json, warmups) {
     if (counter <= warmups) {
       continue;
     }
-    let res = await calculateGame(game);
-    output.games.push(res);
-    if (res.winner === 1) {
-      output.team1Score++;
-    } else if (res.winner === 2) {
-      output.team2Score++;
+    let res;
+    try{
+      res = await calculateGame(game);
+      output.games.push(res);
+      if (res.winner === 1) {
+        output.team1Score++;
+      } else if (res.winner === 2) {
+        output.team2Score++;
+      }
+    }catch(err){
+      log(err);
     }
   }
 
