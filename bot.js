@@ -25,6 +25,9 @@ let globalWarmups;
 const startTime = new Date(Date.now());
 const logFile = `logs/osuBotLog-${startTime.getFullYear()}-${startTime.getMonth()}-${startTime.getDay()}_${startTime.getHours() % 12}-${startTime.getMinutes()}-${startTime.getSeconds()}.txt`;
 console.log(logFile);
+// init log file
+var dir = './logs';
+if (!fs.existsSync(dir)){ fs.mkdirSync(dir); }
 fs.writeFile(logFile,
   `============================================================ OSU TOURNAMENT BOT LOG FILE - ${startTime.getFullYear()}/${startTime.getMonth()}/${startTime.getDay()} ${startTime.getHours() % 12}:${startTime.getMinutes()}:${startTime.getSeconds()} ============================================================ \n`,
   (err) => {
